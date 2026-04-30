@@ -90,3 +90,5 @@ _We now have created a rule, which will notify us of alerts if there is any susp
 <img width="1617" height="760" alt="Screenshot 2026-04-28 235127" src="https://github.com/user-attachments/assets/d23b7d27-2fd3-4c78-a9a8-9d8f5914a3ae" />
 
 Next, we will review and investigate failed login attacks.
+
+## Investigate failed login attacks
