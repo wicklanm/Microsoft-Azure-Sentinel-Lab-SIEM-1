@@ -92,3 +92,16 @@ _We now have created a rule, which will notify us of alerts if there is any susp
 Next, we will review and investigate failed login attacks.
 
 ## Investigate failed login attacks
+
+- Under Microsoft Defender (security.microsoft.com), go to Microsoft Sentinal, Configuration, and Data Connectors.
+
+<img width="1027" height="870" alt="1" src="https://github.com/user-attachments/assets/fd54065e-1761-4646-9898-2a817054d8f8" />
+
+- Select Entra ID, then click on 'open connector page'
+
+<img width="1395" height="906" alt="Screenshot 2026-04-29 212954" src="https://github.com/user-attachments/assets/e413dd14-0db7-45ae-a97d-f76a9bee12b2" />
+
+- We want to check Sign-in logs and Audit logs.
+- log out, login incorrectly a few times, then login with correct password.
+- Go to Sentinal, you workspace, Analytics, click on Defender Portal Link.
+- 
