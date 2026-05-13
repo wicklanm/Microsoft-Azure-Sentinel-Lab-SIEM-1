@@ -30,78 +30,22 @@ _Your deploment is complete._
 - Next, search for Microsoft Sentinal, and click on create.
 - Select our workspace we just created.
 - click Add
-_We will next connect this with Entra ID, which helps enables audit logs and sign-in._
-- Go to content hub for Sentinal
-- Search for Entra ID, click, and select install.
 
-<img width="1196" height="868" alt="Screenshot 2026-04-28 220545" src="https://github.com/user-attachments/assets/c7be2b65-7d08-4cfa-869d-8351b5ac9f40" />
+## Billing and Cost Management
+- Because we want to make use of our Azure free trial, we want to be able make sure we do not exceed our spening limit.
 
-- Go to our Entra ID portal
-- Go to Diagnostic settings under Monitoring and health
-- Make new setting
-- Check Auditlogs and Signin logs. You can choose more if you want, but we will keep it simple for now.
-- include subscription and workspace
+_Azure Budjet Alert_
+- go to Cost Management → Budgets
+- create a $150 budget with alerts at 80% and 100%. This gives you an email warning before you overspend.
 
-<img width="1395" height="898" alt="Screenshot 2026-04-28 230507" src="https://github.com/user-attachments/assets/3e150465-d06f-4809-ae2f-0ba60bfc83f6" />
+<img width="1649" height="274" alt="Screenshot 2026-05-13 161850" src="https://github.com/user-attachments/assets/a857efbd-c70d-44cf-b1b5-c16a374d950c" />
 
-- Go back to Azure portal tab
-- select Manage on bottom right
-_Will want to take of sign-in logs soon after because charges will accumilate fast._
-- Click on Microsoft Entra
-- Open Connector for Microsoft Entra ID
 
-<img width="1196" height="862" alt="Screenshot 2026-04-28 230836" src="https://github.com/user-attachments/assets/7352253a-34cb-4b87-85c2-13be67034faf" />
+_Daily Cap on the LAW_
+- Go to our LAW we just created, can access from 'Resource Groups'.
+- Go to settings, Usage and estimated Costs, select 'Daily Cap'.
+- Set it to something like 2 GB/day.
+- If a misconfigured agent starts spamming verbose logs, this prevents runaway ingestion costs.
 
-- Check Sign-in logs and Audit Logs.
-- Apply Changes
+<img width="1091" height="551" alt="Screenshot 2026-05-13 162503" src="https://github.com/user-attachments/assets/76ca1af5-29a6-4547-bff8-31dc30eabf44" />
 
-_Confirm our logs are running_
-- Sign out of Entra ID and back in a few different times so we can get som activity logs for sign-ins.
-
-- Go back to Sentinal
-- click on our lab we created
-- Click on logs
-
-<img width="1166" height="863" alt="Screenshot 2026-04-28 231710" src="https://github.com/user-attachments/assets/decf3e01-1bc0-457e-a934-37d806997c92" />
-
-Use the following KQL query:
-SigninLogs
-| where ResultType != 0
-| take 10 
-
-- That may or may not get us anything if we didn't fail to login.
-- Go to Sentinal > Analytics, and click on Go to Defneder Portal.
-- Select create under Analytics. Then schedule query rule
-- For Mitre attack, we are selecting credential access and Brute Force.
-
-<img width="1123" height="816" alt="Screenshot 2026-04-28 234313" src="https://github.com/user-attachments/assets/fa67c72c-9375-4777-a33c-e7cce80af48a" />
-
-- Next Rule Logic
-- Enter are query
-
-<img width="1107" height="818" alt="Screenshot 2026-04-28 234721" src="https://github.com/user-attachments/assets/679a0345-9f3a-4453-aa48-ad0b818a2f07" />
-
-- Group out alerts in Incident Settings
-- Review + Create
-- hit save
-
-_We now have created a rule, which will notify us of alerts if there is any suspicous activity of Bruteforce login attacks._
-
-<img width="1617" height="760" alt="Screenshot 2026-04-28 235127" src="https://github.com/user-attachments/assets/d23b7d27-2fd3-4c78-a9a8-9d8f5914a3ae" />
-
-Next, we will review and investigate failed login attacks.
-
-## Investigate failed login attacks
-
-- Under Microsoft Defender (security.microsoft.com), go to Microsoft Sentinal, Configuration, and Data Connectors.
-
-<img width="1027" height="870" alt="1" src="https://github.com/user-attachments/assets/fd54065e-1761-4646-9898-2a817054d8f8" />
-
-- Select Entra ID, then click on 'open connector page'
-
-<img width="1395" height="906" alt="Screenshot 2026-04-29 212954" src="https://github.com/user-attachments/assets/e413dd14-0db7-45ae-a97d-f76a9bee12b2" />
-
-- We want to check Sign-in logs and Audit logs.
-- log out, login incorrectly a few times, then login with correct password.
-- Go to Sentinal, you workspace, Analytics, click on Defender Portal Link.
-- 
