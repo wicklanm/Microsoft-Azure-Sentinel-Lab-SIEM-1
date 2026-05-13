@@ -39,7 +39,7 @@ _We will next connect this with Entra ID, which helps enables audit logs and sig
 - Go to our Entra ID portal
 - Go to Diagnostic settings under Monitoring and health
 - Make new setting
-- Check Auditlogs and Signin logs.
+- Check Auditlogs and Signin logs. You can choose more if you want, but we will keep it simple for now.
 - include subscription and workspace
 
 <img width="1395" height="898" alt="Screenshot 2026-04-28 230507" src="https://github.com/user-attachments/assets/3e150465-d06f-4809-ae2f-0ba60bfc83f6" />
