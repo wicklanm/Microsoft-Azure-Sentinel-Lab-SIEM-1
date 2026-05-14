@@ -7,6 +7,8 @@ Build a SOC environment with a central log aggregation/alerting hub (Microsoft S
 
 # Itinerary
 
+<img width="960" height="842" alt="Screenshot 2026-05-13 193551" src="https://github.com/user-attachments/assets/776af1fd-3739-4244-95e8-d8075c2c450a" />
+
 **Phase 1 — Foundation**
 Set up your Azure subscription and resource group. Everything goes in one Resource Group (e.g., rg-soc-lab) in a single region (East US or West US 2 are cheapest). This keeps networking simple and egress costs low.
 **Key resources to deploy:**
