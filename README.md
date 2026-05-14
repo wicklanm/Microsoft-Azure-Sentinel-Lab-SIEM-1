@@ -83,11 +83,6 @@ _Your deployment is complete._
 
 <img width="1192" height="676" alt="Screenshot 2026-04-28 215816" src="https://github.com/user-attachments/assets/f8240065-7b18-4dbd-9031-88de782324f7" />
 
-## Microsoft Sentinel
-- Next, search for Microsoft Sentinal, and click on create.
-- Select our workspace we just created.
-- click Add
-
 ## Billing and Cost Management
 - Because we want to make use of our Azure free trial, we want to be able make sure we do not exceed our spening limit.
 
@@ -123,6 +118,22 @@ _We want to create a virtual network with a subnet so we can have our machines c
 <img width="1649" height="860" alt="Screenshot 2026-05-13 164139" src="https://github.com/user-attachments/assets/f2f31451-78b9-4f8e-a5c3-daf6c3880211" />
 
 <img width="1252" height="493" alt="Screenshot 2026-05-13 165032" src="https://github.com/user-attachments/assets/f64ccb40-84aa-4841-8c23-1737fab928a8" />
+
+## Microsoft Sentinel
+- Next, search for Microsoft Sentinal, and click on create.
+- Select our workspace we just created.
+- click Add
+
+### Install tools and solutions
+
+<img width="1562" height="835" alt="Screenshot 2026-05-13 194902" src="https://github.com/user-attachments/assets/7ef288dd-490a-4216-9661-aec9912cf64d" />
+
+- Go to Content Management → Content Hub. This is where you install pre-built detection packs. Once clicking on conent hub, it will actually direct you to the Micsrofot Defender Portal. For the lab, install these:
+
+- Microsoft Dender XDR - pulls in MDE alerts, device events, identity data
+- Windows Security Events — detection rules for common Windows attack patterns
+- Azure Activity — rules for detecting suspicious Azure control-plane activity
+- MITRE ATT&CK — maps your coverage visually
 
 _We have our Virtual Network setup. Now, we should be able to add virtual machines._
 
