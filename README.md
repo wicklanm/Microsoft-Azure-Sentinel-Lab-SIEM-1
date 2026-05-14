@@ -140,22 +140,43 @@ _We want to create a virtual network with a subnet so we can have our machines c
 
 _After your workspace is connected, the banner on the Home page shows that your environment is ready. The Home page is updated with new sections that include metrics from Microsoft Sentinel, like the number of data connectors and automation rules._
 
+## Connect Microsoft Defender XDR
+- Go back to the Azure Portal → Microsoft Sentinel → your workspace
+- Click Configuration → Data Connectors
+- Find Microsoft Defender XDR, its status should say Connected with a green indicator. If not, open connector page (it should have connected when we connected the workspace to Defender in Defender Portal).
+
 <img width="1405" height="798" alt="Screenshot 2026-05-13 200838" src="https://github.com/user-attachments/assets/ac29a137-bb58-4469-b95a-e5c7c53c3cbc" />
 
-**For the lab, install these:**
-- Microsoft Dender XDR - pulls in MDE alerts, device events, identity data
+- Under Sentinel, go to Logs
+- Enter and run this query. It may not have anything, which is fine, since it means no incidents have fired yet. We still have to onboard our VM's.
+
+## Connect to Azure Activity
+So. . . as of July of 2025, Sentinel workspaces automatically connect to the defender portal. So from here on out, we will be accessing Sentinel and other feature from within Microsoft Defender.
+- under Microsoft Defender:
+- Go to Microsoft Sentinel → Configurations → Data connectors
+- Search for "Azure Activity"
+- If it doesn't appear, go to Content management → Content hub, search "Azure Activity", install it, then come back and refresh Data connectors.
+
+<img width="1903" height="916" alt="Screenshot 2026-05-13 213021" src="https://github.com/user-attachments/assets/75c28b66-7201-42ca-9026-9a3ab9d273ca" />
+- Open the connector and view the information
+
+## Microsoft Defender XDR
+I just want to note on here that earlier, we connected Defender XDR when we connected our workspace after going to the Defender portal FROM Sentinel. So, we should be good to go. Defender XDR is enabled.
+
+## Install the other tools
+_Install the following from Conent hub under Content management in Defender:_
 - Windows Security Events — detection rules for common Windows attack patterns
-- Azure Activity — rules for detecting suspicious Azure control-plane activity
-- MITRE ATT&CK — maps your coverage visually
+- Endpoint Threat Protection Essentials — provides content to monitor, detect and investigate threats related to windows machines. The solution looks for things like suspicious commandlines, PowerShell based attacks, LOLBins, registry manipulation, scheduled tasks etc. which are some of the most commonly used techniques by attackers when targeting endpoints.
+
+## MITRE ATT&CK Sollution — maps your coverage visually
+This should actually be installed and enabled already.
+- In Defender, You can verify this by going to Threat Management > MITRE ATT&CK.
+- You can open any incident or alert in the Defender portal; the right-hand panel displays mapped MITRE ATT&CK techniques.
+- Regardless, we should be good to deploy our virtual machines.
+
+<img width="1553" height="811" alt="Screenshot 2026-05-13 215158" src="https://github.com/user-attachments/assets/2e6ec46b-c55f-4759-90fb-6eace4a14e1e" />
 
 _We have our Virtual Network setup. Now, we should be able to add virtual machines._
 
 # Phase 2 - Endpoints and EDR
 _We will be deploying some virtual machines and onboard them to Microsoft Defender._
-_After that, we will be setting up data collection rules. For our Windows VM's, data we should collect is:_
-- Security event log — all events (or at minimum, audit success + failure)
-- System event log — warnings and errors
-- Application event log — errors only
-- Microsoft-Windows-Sysmon/Operational — all events 
-
-## 
