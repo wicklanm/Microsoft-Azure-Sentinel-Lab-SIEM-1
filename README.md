@@ -1,5 +1,8 @@
-# Microsoft-Azure-Sentinel-Lab-SIEM-1
+# Microsoft-Azure-Sentinel-Defender-Lab-SIEM-1
 Microsoft Azure &amp; Sentinel Lab (SIEM) 1
+
+# Objective
+Build a SOC environment with a central log aggregation/alerting hub (Microsoft Sentinel as your SIEM), endpoint protection (Microsoft Defender for Endpoint), and a few vulnerable/target VMs to generate realistic telemetry, using Microsoft Azure as the host for our target environment.
 
 # Itinerary
 **Phase 1 — Foundation**
@@ -21,11 +24,11 @@ Deploy 2–3 small VMs and onboard them to Microsoft Defender for Endpoint (MDE)
 **Phase 3 — SIEM Configuration**
 1. Connect data sources to Microsoft Sentinel:
 
-_MDE connector_ — streams endpoint alerts, device events, and advanced hunting data
-_Azure Activity logs_ — tracks changes to your own Azure environment (great for cloud detection)
-_Windows Security Events via AMA agent_ — login events, process creation (Event ID 4688), etc.
-_Sysmon_ — install on the Windows VM for rich process/network telemetry (free, essential)
-_Linux Syslog_ — from your Ubuntu VM
+- _MDE connector_ — streams endpoint alerts, device events, and advanced hunting data
+- _Azure Activity logs_ — tracks changes to your own Azure environment (great for cloud detection)
+- _Windows Security Events via AMA agent_ — login events, process creation (Event ID 4688), etc.
+- _Sysmon_ — install on the Windows VM for rich process/network telemetry (free, essential)
+- _Linux Syslog_ — from your Ubuntu VM
 
 2. Build your first Analytic Rules (detection logic):
 - Brute force detection (multiple failed logins)
