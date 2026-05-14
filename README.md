@@ -1,11 +1,11 @@
-**# Microsoft-Azure-Sentinel-Defender-Lab-SIEM-1**
+# Microsoft-Azure-Sentinel-Defender-Lab-SIEM-1
 Microsoft Azure &amp; Sentinel Lab (SIEM) 1
 
-**# Objective**
+# Objective
 
 Build a SOC environment with a central log aggregation/alerting hub (Microsoft Sentinel as your SIEM), endpoint protection (Microsoft Defender for Endpoint), and a few vulnerable/target VMs to generate realistic telemetry, using Microsoft Azure as the host for our target environment.
 
-**# Itinerary**
+# Itinerary
 
 **Phase 1 — Foundation**
 Set up your Azure subscription and resource group. Everything goes in one Resource Group (e.g., rg-soc-lab) in a single region (East US or West US 2 are cheapest). This keeps networking simple and egress costs low.
@@ -52,7 +52,7 @@ _Run structured attack scenarios and hunt for them in Sentinel:_
 - Set up Playbooks (Logic Apps) for automated response — e.g., auto-isolate a VM when a high-severity alert fires
 - Document your detections and write a mini threat-hunt report
 
-**# STEPS**
+# STEPS
 
 # Phase 1 - Foundation
 
@@ -125,3 +125,11 @@ _We want to create a virtual network with a subnet so we can have our machines c
 _We have our Virtual Network setup. Now, we should be able to add virtual machines._
 
 # Phase 2 - Endpoints and EDR
+_We will be deploying some virtual machines and onboard them to Microsoft Defender._
+_After that, we will be setting up data collection rules. For our Windows VM's, data we should collect is:_
+- Security event log — all events (or at minimum, audit success + failure)
+- System event log — warnings and errors
+- Application event log — errors only
+- Microsoft-Windows-Sysmon/Operational — all events (this is the gold mine)
+
+- 
