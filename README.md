@@ -1,6 +1,51 @@
 # Microsoft-Azure-Sentinel-Lab-SIEM-1
 Microsoft Azure &amp; Sentinel Lab (SIEM) 1
 
+# Itinerary
+**Phase 1 — Foundation**
+Set up your Azure subscription and resource group. Everything goes in one Resource Group (e.g., rg-soc-lab) in a single region (East US or West US 2 are cheapest). This keeps networking simple and egress costs low.
+**Key resources to deploy:**
+- Log Analytics Workspace (LAW) — this is the data backbone for Microsoft Sentinel
+- Microsoft Sentinel — enable it on top of the LAW (free 90-day trial tier)
+- Azure Virtual Network (10.0.0.0/16) with two subnets: attacker and victim
+
+**Phase 2 — Endpoints & EDR**
+Deploy 2–3 small VMs and onboard them to Microsoft Defender for Endpoint (MDE):
+
+- Windows 11 VM (victim) — B2s SKU (~$35/mo, ~$1.17/day). Onboard to MDE via the Defender portal. This is the primary endpoint to defend and attack.
+- Ubuntu 22.04 VM (attacker/analyst) — B1s SKU (~$8/mo). Install tools like Nmap, Metasploit, and use it to generate attack telemetry against the Windows VM.
+- Windows Server 2022 VM (optional, for AD attacks) — B2s SKU if budget allows.
+
+**Cost tip**: Auto-shutdown VMs at night via Azure Automation. Running 8 hrs/day instead of 24 cuts VM costs by 67%.
+
+**Phase 3 — SIEM Configuration**
+1. Connect data sources to Microsoft Sentinel:
+
+_MDE connector_ — streams endpoint alerts, device events, and advanced hunting data
+_Azure Activity logs_ — tracks changes to your own Azure environment (great for cloud detection)
+_Windows Security Events via AMA agent_ — login events, process creation (Event ID 4688), etc.
+_Sysmon_ — install on the Windows VM for rich process/network telemetry (free, essential)
+_Linux Syslog_ — from your Ubuntu VM
+
+2. Build your first Analytic Rules (detection logic):
+- Brute force detection (multiple failed logins)
+- New local admin account creation
+- Base64-encoded PowerShell execution
+- Lateral movement via PsExec
+
+**Phase 4 — Attack Simulation & Detection**
+_Run structured attack scenarios and hunt for them in Sentinel:_
+
+- MITRE ATT&CK T1059 — Execute encoded PowerShell from the attacker VM, detect in Sentinel
+- T1003 — Credential dumping with Mimikatz, detect via Defender alerts
+- T1046 — Network scanning with Nmap, detect via Azure NSG flow logs
+- T1136 — Create a local admin, detect via Sentinel rule
+- Use KQL (Kusto Query Language) to hunt across SecurityEvent, DeviceProcessEvents, DeviceNetworkEvents tables
+
+**Phase 5 — Dashboards & Reporting**
+- Build a Sentinel Workbook (custom dashboard) showing alert trends, top endpoints, and MITRE coverage
+- Set up Playbooks (Logic Apps) for automated response — e.g., auto-isolate a VM when a high-severity alert fires
+- Document your detections and write a mini threat-hunt report
 
 # Steps
 
