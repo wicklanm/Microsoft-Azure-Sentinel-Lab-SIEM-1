@@ -128,8 +128,21 @@ _We want to create a virtual network with a subnet so we can have our machines c
 
 <img width="1562" height="835" alt="Screenshot 2026-05-13 194902" src="https://github.com/user-attachments/assets/7ef288dd-490a-4216-9661-aec9912cf64d" />
 
-- Go to Content Management → Content Hub. This is where you install pre-built detection packs. Once clicking on conent hub, it will actually direct you to the Micsrofot Defender Portal. For the lab, install these:
+- Go to Content Management → Content Hub. This is where you install pre-built detection packs. Once clicking on conent hub, it will actually direct you to the Micsrofot Defender Portal. We will then need to connect our workspace to Defender.
+1. Go to the Microsoft Defender portal and sign in.
+2. Select System > Settings > Microsoft Sentinel > Connect a workspace.
+3. Select the workspaces you want to connect and select Next.
+4. Select the Primary workspace.
+5. Read and understand the product changes associated with connecting your workspace.
+6. Select Connect.
 
+<img width="1832" height="891" alt="Screenshot 2026-05-13 200603" src="https://github.com/user-attachments/assets/e77bb0a4-bb8b-4247-b88d-6043fea6aeb9" />
+
+_After your workspace is connected, the banner on the Home page shows that your environment is ready. The Home page is updated with new sections that include metrics from Microsoft Sentinel, like the number of data connectors and automation rules._
+
+<img width="1405" height="798" alt="Screenshot 2026-05-13 200838" src="https://github.com/user-attachments/assets/ac29a137-bb58-4469-b95a-e5c7c53c3cbc" />
+
+**For the lab, install these:**
 - Microsoft Dender XDR - pulls in MDE alerts, device events, identity data
 - Windows Security Events — detection rules for common Windows attack patterns
 - Azure Activity — rules for detecting suspicious Azure control-plane activity
@@ -143,6 +156,6 @@ _After that, we will be setting up data collection rules. For our Windows VM's, 
 - Security event log — all events (or at minimum, audit success + failure)
 - System event log — warnings and errors
 - Application event log — errors only
-- Microsoft-Windows-Sysmon/Operational — all events (this is the gold mine)
+- Microsoft-Windows-Sysmon/Operational — all events 
 
-- 
+## 
