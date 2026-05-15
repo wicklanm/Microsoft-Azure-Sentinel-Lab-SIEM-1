@@ -178,5 +178,21 @@ This should actually be installed and enabled already.
 
 _We have our Virtual Network setup. Now, we should be able to add virtual machines._
 
+## Add Virtual Machines
+- In Azure, go to Virtual Machines section
+- click create
+- Create: Click the "+ Create" button and select "Azure virtual machine".
+- Configure Basics: Fill in essential details in the "Basics" tab:Subscription:
+- Select your Azure subscription.
+- Resource Group: Select or create a new resource group.
+- VM Name: Give your VM a unique name.
+- Region: Choose a geographical location (e.g., East US).
+- Image: Select the operating system (e.g., Windows Server, Ubuntu).
+- Size: Choose the VM's CPU and memory configuration. Best to keep it simple, like Standard D2als v7 (2 vcpus, 4 GiB memory).
+- Set Credentials: Create an administrator username and password (or SSH key).
+- Inbound Ports: Configure rules (e.g., allow RDP for Windows or SSH for Linux).
+- Make sure to enable basic plan for free UNDER Microsoft Defender for Cloud.
+- Review + create: Click to validate settings, then click "Create" to deploy.
+
 # Phase 2 - Endpoints and EDR
 _We will be deploying some virtual machines and onboard them to Microsoft Defender._
