@@ -176,9 +176,18 @@ This should actually be installed and enabled already.
 
 <img width="1553" height="811" alt="Screenshot 2026-05-13 215158" src="https://github.com/user-attachments/assets/2e6ec46b-c55f-4759-90fb-6eace4a14e1e" />
 
-_We have our Virtual Network setup. Now, we should be able to add virtual machines._
+## Enable the Azure Activity Connector
+
+- In Microsoft Defender, Go to Sentinel → Data Connectors → Azure Activity
+- Click Open connector page
+- Click the blue Launch Azure Policy Assignment Wizard button and follow the prompts to route your subscription's activity log into your workspace.
+- Alternatively, some tenants see a simple Connect button — click that if present
+_This populates the AzureActivity table and you'll have your first real data source running within minutes._
+
+**_We have our Virtual Network setup. Now, we should be able to add virtual machines._**
 
 ## Add Virtual Machines
+### 1. Windows 11 Pro
 - In Azure, go to Virtual Machines section
 - click create
 - Create: Click the "+ Create" button and select "Azure virtual machine".
@@ -193,6 +202,11 @@ _We have our Virtual Network setup. Now, we should be able to add virtual machin
 - Inbound Ports: Configure rules (e.g., allow RDP for Windows or SSH for Linux).
 - Make sure to enable basic plan for free UNDER Microsoft Defender for Cloud.
 - Review + create: Click to validate settings, then click "Create" to deploy.
+_Our Windows 11 Pro Machine is deployed, This will mostly serve as our victom machine._
+
+<img width="1387" height="538" alt="Screenshot 2026-05-14 215659" src="https://github.com/user-attachments/assets/a63494dd-2064-4562-907a-4b65f3398f4a" />
+
+### 2. Ubuntu
 
 # Phase 2 - Endpoints and EDR
 _We will be deploying some virtual machines and onboard them to Microsoft Defender._
