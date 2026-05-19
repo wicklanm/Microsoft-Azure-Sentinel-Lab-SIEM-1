@@ -275,6 +275,19 @@ Find some software that is goinf to serve as victim software on this machine. Th
 <img width="1387" height="538" alt="Screenshot 2026-05-14 215659" src="https://github.com/user-attachments/assets/a63494dd-2064-4562-907a-4b65f3398f4a" />
 
 ### 2. Ubuntu
+_Create Ubuntu Attack server_
+Go to Azure Portal → Virtual Machines → Create → Azure Virtual Machine:
 
 # Phase 2 - Endpoints and EDR
 _We will be deploying some virtual machines and onboard them to Microsoft Defender._
+- Go to Azure Portal → Virtual Machines → Create → Azure Virtual Machine:
+- select the following for the cheapest option (The size shown might not be available, I chose a v1 option instead)
+
+<img width="761" height="461" alt="Screenshot 2026-05-19 155620" src="https://github.com/user-attachments/assets/e352ff8a-090c-4c79-aa0f-bc38c34a9599" />
+
+- Under Management tab — enable Auto-shutdown just like the Windows VM.
+- Under Networking tab — make sure it's on the same Virtual Network as your Windows VM. This is critical so the two VMs can reach each other for attack simulation.
+
+<img width="1101" height="837" alt="Screenshot 2026-05-19 160211" src="https://github.com/user-attachments/assets/c52f48ee-a0a0-429f-b181-2b8c9e12ef53" />
+
+
