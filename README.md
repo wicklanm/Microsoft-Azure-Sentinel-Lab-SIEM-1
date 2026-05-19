@@ -204,6 +204,74 @@ _This populates the AzureActivity table and you'll have your first real data sou
 - Review + create: Click to validate settings, then click "Create" to deploy.
 _Our Windows 11 Pro Machine is deployed, This will mostly serve as our victom machine._
 
+### Setup configuration
+#### Setup sysmon
+
+Sysmon is a free Microsoft tool that writes far richer event logs than Windows does by default. It's the difference between seeing "a process ran" and seeing the full command line, parent process, network connections, and file hashes. It's essential for realistic SOC work.
+- Inside the VM via RDP, open PowerShell as Administrator and run:
+
+##### Create a working folder
+New-Item -ItemType Directory -Path "C:\Tools" -Force
+
+##### Download Sysmon
+Invoke-WebRequest -Uri "https://download.sysinternals.com/files/Sysmon.zip" -OutFile "C:\Tools\Sysmon.zip"
+
+##### Extract it
+Expand-Archive -Path "C:\Tools\Sysmon.zip" -DestinationPath "C:\Tools\Sysmon"
+
+##### Download the SwiftOnSecurity community config (industry standard for labs)
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/SwiftOnSecurity/sysmon-config/master/sysmonconfig-export.xml" -OutFile "C:\Tools\Sysmon\sysmonconfig.xml"
+
+##### Install Sysmon with the config
+C:\Tools\Sysmon\Sysmon64.exe -accepteula -i C:\Tools\Sysmon\sysmonconfig.xml
+
+- run the following to verify it is running
+- Get-Service sysmon*
+
+#### Data Rule with Monitor in Azure
+_We want to create a data rule for events_
+This is what gets Windows Security Events and Sysmon logs flowing into your Log Analytics Workspace and Sentinel. Back in the Azure Portal (portal.azure.com):
+
+- Search for Monitor → Data Collection Rules → Create
+- Fill in the basics:
+
+<img width="674" height="260" alt="Screenshot 2026-05-19 152839" src="https://github.com/user-attachments/assets/8fd9979d-a850-4172-8ac0-290d312ef420" />
+
+- On the Resources tab, click Add resources and select your Windows 11 VM
+- On the Collect and deliver tab, click Add data source and add:
+
+- Data source type: Windows Event Logs
+- Add these channels manually under "Custom" if they don't appear automatically:
+
+- Security — set to All
+- Microsoft-Windows-Sysmon/Operational — set to All
+- System — set to Warning and above
+
+- Set the Destination to your Log Analytics Workspace (law-soc-lab-01)
+- Review + Create
+
+- we should eventually see event id's underSentinel → Advanced Hunting:
+- run this KQL query:
+- SecurityEvent
+| where TimeGenerated > ago(30m)
+| summarize count() by EventID
+| order by count_ desc
+
+_If nothing shows up, that is ok._
+
+#### Install other software commonly leveraged by attackers
+Find some software that is goinf to serve as victim software on this machine. The following are commonly used ones by attackers:
+
+##### Install Chocolatey package manager first
+- Set-ExecutionPolicy Bypass -Scope Process -Force
+- [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+- iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+##### Install common software attackers target
+- choco install googlechrome -y
+- choco install 7zip -y
+- choco install notepadplusplus -y
+
 <img width="1387" height="538" alt="Screenshot 2026-05-14 215659" src="https://github.com/user-attachments/assets/a63494dd-2064-4562-907a-4b65f3398f4a" />
 
 ### 2. Ubuntu
