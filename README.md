@@ -92,7 +92,6 @@ _Azure Budjet Alert_
 
 <img width="1649" height="274" alt="Screenshot 2026-05-13 161850" src="https://github.com/user-attachments/assets/a857efbd-c70d-44cf-b1b5-c16a374d950c" />
 
-
 _Daily Cap on the LAW_
 - Go to our LAW we just created, can access from 'Resource Groups'.
 - Go to settings, Usage and estimated Costs, select 'Daily Cap'.
@@ -186,7 +185,10 @@ _This populates the AzureActivity table and you'll have your first real data sou
 
 **_We have our Virtual Network setup. Now, we should be able to add virtual machines._**
 
+**# Phase 2 - Endpoints and EDR**
+
 ## Add Virtual Machines
+
 ### 1. Windows 11 Pro
 - In Azure, go to Virtual Machines section
 - click create
@@ -276,9 +278,6 @@ Find some software that is goinf to serve as victim software on this machine. Th
 
 ### 2. Ubuntu
 _Create Ubuntu Attack server_
-Go to Azure Portal → Virtual Machines → Create → Azure Virtual Machine:
-
-# Phase 2 - Endpoints and EDR
 _We will be deploying some virtual machines and onboard them to Microsoft Defender._
 - Go to Azure Portal → Virtual Machines → Create → Azure Virtual Machine:
 - select the following for the cheapest option (The size shown might not be available, I chose a v1 option instead)
@@ -290,4 +289,57 @@ _We will be deploying some virtual machines and onboard them to Microsoft Defend
 
 <img width="1101" height="837" alt="Screenshot 2026-05-19 160211" src="https://github.com/user-attachments/assets/c52f48ee-a0a0-429f-b181-2b8c9e12ef53" />
 
+_In order to SSH into our Ubuntu Server, you need to restrict access to your private key file so that only your user account can read it. Windows permissions are often inherited from parent folders, which makes them too open by default for SSH._
+Here is how to secure your key file:
+- Move your downloaded file to whatever path you want it to be in on your local computer
+- Right-click your private key file (PrivateKeySSH Ubuntu) and select Properties.
+- Go to the Security tab and click the Advanced button.
+- Click Disable inheritance (and choose to convert inherited permissions into explicit permissions or remove them, depending on your Windows version).
+- Click Add -> Select a principal, type your Windows username, click Check Names, and hit OK.
+- Under Basic Permissions, check Read and Full Control (or Modify), and click OK.Remove all other users, groups (e.g., "Users"), or inherited accounts from the list so that only your account and SYSTEM remain.
+
+- Next fill out information under SSH comman under our Native SSH section for our Ubuntu Virtual Machine:
+- Then, copy the bash query provided and run from our local Windows Powershell
+
+<img width="856" height="837" alt="Screenshot 2026-05-19 163754" src="https://github.com/user-attachments/assets/5412719f-7d9d-4908-96c9-17aafcfc9b0d" />
+
+### Alternatively....
+- Under 'Connect', Choose the 'Reset password' mode instead of SSH (if you are having trouble with SSH, you might just want to choose this)
+
+<img width="875" height="862" alt="Screenshot 2026-05-19 164505" src="https://github.com/user-attachments/assets/f1b0659b-f799-494d-91ac-17c0c1aeb310" />
+
+- Then run SSH -i 'path' again, enter password
+
+<img width="774" height="768" alt="Screenshot 2026-05-19 173300" src="https://github.com/user-attachments/assets/9dd2028b-eabd-45b7-9432-f520155ae673" />
+
+#### Update the System and Install Attack Tools
+Once connected via SSH, run:
+
+##### Update everything first
+sudo apt update && sudo apt upgrade -y
+
+##### Install essential tools
+sudo apt install -y nmap netcat-traditional curl wget git python3 python3-pip
+
+##### Install Metasploit Framework
+curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
+chmod 755 msfinstall
+sudo ./msfinstall
+
+##### Initialize Metasploit database
+msfdb init
+
+##### Install CrackMapExec (lateral movement and AD enumeration)
+sudo apt install -y crackmapexec
+
+##### Install Impacket (Python tools for Windows/AD attacks)
+pip3 install impacket
+
+##### Install Hydra (brute force)
+sudo apt install -y hydra
+
+##### Install enum4linux (SMB/Windows enumeration)
+sudo apt install -y enum4linux
+
+_This gives us a realistic attacker toolkit covering reconnaissance, exploitation, credential attacks, and lateral movement — all mapped to MITRE ATT&CK techniques._
 
