@@ -343,3 +343,11 @@ sudo apt install -y enum4linux
 
 _This gives us a realistic attacker toolkit covering reconnaissance, exploitation, credential attacks, and lateral movement — all mapped to MITRE ATT&CK techniques._
 
+#### Test Ubunto attack server connection to Windows 11 machine
+Run the following to test the connection to Windows 11 machine (We will try to gain access and attack later):
+
+# Basic ping test
+ping -c 4 <WINDOWS_PRIVATE_IP>
+
+# Port scan to confirm Windows services are visible
+nmap -sV <WINDOWS_PRIVATE_IP>
