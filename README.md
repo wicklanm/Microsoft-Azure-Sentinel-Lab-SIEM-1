@@ -358,3 +358,20 @@ ping -c 4 <WINDOWS_PRIVATE_IP>
 
 # Port scan to confirm Windows services are visible
 nmap -sV <WINDOWS_PRIVATE_IP>
+
+# Phase 3 SIEM Configuration
+
+## Connect Linux Syslog from Ubuntu VM
+- In the Defender portal, go to Microsoft Sentinel > Configurations > content hub
+- Search for and install Sysmon and everything under it.
+- Now go to data connectors under Configuration.
+- Search for Syslog via AMA. Click Open connector page.
+- Click Create data collection rule.
+- Name it dcr-linux-syslog. Associate it with your Ubuntu VM. Set the destination to law-soc-lab-01.
+
+<img width="591" height="632" alt="Screenshot 2026-05-20 214114" src="https://github.com/user-attachments/assets/b0e32eb8-0835-4450-94e7-ef07b1f0a39d" />
+
+- Select which syslog facilities to collect (auth, syslog, daemon are a good start).
+- Click Create.
+
+In order to see activity coming back onto our Ubuntu Attack server, we will add Sysmon to it and attach a DCR wizard to it from Wiondows Defender.
