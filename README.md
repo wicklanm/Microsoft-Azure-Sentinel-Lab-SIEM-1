@@ -166,6 +166,7 @@ I just want to note on here that earlier, we connected Defender XDR when we conn
 _Install the following from Conent hub under Content management in Defender:_
 - Windows Security Events — detection rules for common Windows attack patterns
 - Endpoint Threat Protection Essentials — provides content to monitor, detect and investigate threats related to windows machines. The solution looks for things like suspicious commandlines, PowerShell based attacks, LOLBins, registry manipulation, scheduled tasks etc. which are some of the most commonly used techniques by attackers when targeting endpoints.
+- Microsoft Entra ID
 
 ## MITRE ATT&CK Sollution — maps your coverage visually
 This should actually be installed and enabled already.
@@ -182,6 +183,12 @@ This should actually be installed and enabled already.
 - Click the blue Launch Azure Policy Assignment Wizard button and follow the prompts to route your subscription's activity log into your workspace.
 - Alternatively, some tenants see a simple Connect button — click that if present
 _This populates the AzureActivity table and you'll have your first real data source running within minutes._
+
+## Add Rules in our Content hub:
+- Go into Azure Activity > Manage > add some rules to notify us of certain activities.
+- Go into Entra ID connector and so the same.
+
+<img width="1418" height="760" alt="Screenshot 2026-05-20 211618" src="https://github.com/user-attachments/assets/caba9be4-a685-47f4-a80d-5f73903ea2e0" />
 
 **_We have our Virtual Network setup. Now, we should be able to add virtual machines._**
 
