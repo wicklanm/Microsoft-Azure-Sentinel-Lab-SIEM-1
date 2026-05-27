@@ -375,3 +375,42 @@ nmap -sV <WINDOWS_PRIVATE_IP>
 - Click Create.
 
 In order to see activity coming back onto our Ubuntu Attack server, we will add Sysmon to it and attach a DCR wizard to it from Wiondows Defender.
+
+## Cleanup with Defender XDR
+_It seems tables in my Advanced hunting Module in Defender were empty. No queries at all were running. LKooks like Defender XDR was not running in Azure > Sentinel. (hoonestly, this migration from Sentinel to Defender has made this entire lab and process quite cumbersome)_
+I had to turn on Defender XDR in the Sentinel product hub in Azure and turn on everything in there. I then added more rules.
+
+<img width="1693" height="878" alt="Screenshot 2026-05-26 215609" src="https://github.com/user-attachments/assets/66739ea3-aacd-4c16-8ede-00a21a6779cc" />
+
+Step 3.3 — Enable Analytic Rules (Detections)
+Analytic Rules are the detection engine — they run KQL queries on a schedule and create incidents when matches are found.
+
+Go to Microsoft Sentinel > Configurations > Analytics.
+Click Rule templates to see all rules installed from Content Hub.
+Enable the following rules to start (click each, then Create rule):
+Failed logon attempts (potential brute force) — T1110
+New local admin user created — T1136
+Suspicious PowerShell command line — T1059.001
+Rare subscription-level operations in Azure
+
+<img width="1880" height="900" alt="Screenshot 2026-05-26 220957" src="https://github.com/user-attachments/assets/eff510e2-28e0-45f6-a043-7574ae732aa2" />
+
+<img width="1836" height="846" alt="Screenshot 2026-05-26 221627" src="https://github.com/user-attachments/assets/3a0a7d67-993d-43ac-be40-166077427648" />
+
+
+Step 3.4 — Write Your First Custom Detection Rule
+In addition to the template rules, write a custom rule to detect Nmap network scanning:
+
+Go to Microsoft Sentinel > Configurations > Analytics > Create > Scheduled query rule.
+Name: Network Port Scan Detected. Severity: Medium. MITRE Tactic: Discovery (T1046).
+Paste this KQL as the rule query:
+DeviceNetworkEvents
+| where Timestamp > ago(5m)
+| summarize PortsScanned = dcount(RemotePort), Connections = count() by DeviceName, RemoteIP, bin(Timestamp, 5m)
+| where PortsScanned > 15
+| project Timestamp, DeviceName, RemoteIP, PortsScanned, Connections
+Set the query schedule to run every 5 minutes, look back 5 minutes.
+Set alert threshold to greater than 0 results.
+Click Save.
+
+<img width="1840" height="864" alt="Screenshot 2026-05-26 221853" src="https://github.com/user-attachments/assets/4f12678f-a1fb-438d-aabc-87e3d6ab2c73" />
