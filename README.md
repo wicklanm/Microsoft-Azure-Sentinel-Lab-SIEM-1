@@ -1,3 +1,4 @@
+<img width="1452" height="828" alt="Screenshot 2026-05-28 161102" src="https://github.com/user-attachments/assets/2c418cf3-67e3-401f-ae8b-d266705c32df" />
 # Microsoft-Azure-Sentinel-Defender-Lab-SIEM-1
 Microsoft Azure &amp; Sentinel Lab (SIEM) 1
 
@@ -420,6 +421,8 @@ Run the attack from Ubuntu VM:
 sudo apt install -y wordlists && sudo gunzip /usr/share/wordlists/rockyou.txt.gz
 hydra -l Administrator -P /usr/share/wordlists/rockyou.txt rdp://<WINDOWS_PRIVATE_IP> -t 4 -w 3
 
+<img width="876" height="232" alt="Screenshot 2026-05-27 211814" src="https://github.com/user-attachments/assets/46ba0268-514a-445d-aed6-ce7ec1002509" />
+
 Detect it in Sentinel — run in Advanced Hunting:
 SecurityEvent
 | where EventID == 4625
@@ -430,6 +433,9 @@ SecurityEvent
 
 Expected outcome:
 Multiple Event ID 4625 entries and a Defender alert for brute force activity.
+
+<img width="1452" height="828" alt="Screenshot 2026-05-28 161102" src="https://github.com/user-attachments/assets/78e455cb-4134-4f0c-bb85-b17bdb9ffacf" />
+
 
 Step 4.2 — Attack Exercise: Network Scan (T1046)
 Run the attack from Ubuntu VM:
@@ -451,4 +457,5 @@ Detect it in Sentinel:
 SecurityEvent
 | where EventID == 4720
 | project TimeGenerated, TargetUserName, SubjectUserName, Computer
+
 
