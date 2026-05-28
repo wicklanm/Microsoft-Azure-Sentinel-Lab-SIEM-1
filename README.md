@@ -414,3 +414,41 @@ Set alert threshold to greater than 0 results.
 Click Save.
 
 <img width="1840" height="864" alt="Screenshot 2026-05-26 221853" src="https://github.com/user-attachments/assets/4f12678f-a1fb-438d-aabc-87e3d6ab2c73" />
+
+# Step 4.1 — Attack Exercise: Brute Force (T1110)
+Run the attack from Ubuntu VM:
+sudo apt install -y wordlists && sudo gunzip /usr/share/wordlists/rockyou.txt.gz
+hydra -l Administrator -P /usr/share/wordlists/rockyou.txt rdp://<WINDOWS_PRIVATE_IP> -t 4 -w 3
+
+Detect it in Sentinel — run in Advanced Hunting:
+SecurityEvent
+| where EventID == 4625
+| where TimeGenerated > ago(1h)
+| summarize FailedAttempts = count() by TargetAccount, IpAddress, bin(TimeGenerated, 5m)
+| where FailedAttempts > 10
+| order by FailedAttempts desc
+
+Expected outcome:
+Multiple Event ID 4625 entries and a Defender alert for brute force activity.
+
+Step 4.2 — Attack Exercise: Network Scan (T1046)
+Run the attack from Ubuntu VM:
+nmap -sV -p 1-1000 <WINDOWS_PRIVATE_IP>
+
+Detect it in Sentinel:
+DeviceNetworkEvents
+| where Timestamp > ago(30m)
+| where RemoteIP == "<UBUNTU_PRIVATE_IP>"
+| summarize PortsScanned = dcount(RemotePort), Count = count() by DeviceName, RemoteIP, bin(Timestamp, 5m)
+| where PortsScanned > 10
+
+Step 4.3 — Attack Exercise: Create Local Admin Account (T1136)
+Run from inside Windows VM (via RDP or PowerShell):
+net user backdoor P@ssw0rd123! /add
+net localgroup administrators backdoor /add
+
+Detect it in Sentinel:
+SecurityEvent
+| where EventID == 4720
+| project TimeGenerated, TargetUserName, SubjectUserName, Computer
+
