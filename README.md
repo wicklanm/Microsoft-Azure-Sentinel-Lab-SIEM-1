@@ -450,6 +450,10 @@ DeviceNetworkEvents
 
 Step 4.3 — Attack Exercise: Create Local Admin Account (T1136)
 - Will need to install RDP software, like xfreerdp
+  sudo apt update
+  sudo apt install freerdp3-x11
+- Also will need to install a desktop environment for Ubunto. Can use:
+- sudo apt install ubuntu-desktop
 Run from inside Windows VM (via RDP or PowerShell):
 net user backdoor P@ssw0rd123! /add
 net localgroup administrators backdoor /add
